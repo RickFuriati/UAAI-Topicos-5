@@ -94,17 +94,18 @@ def generate_cluster_map():
     centro=[-19.9227417, -43.9451139]
 
 
-    radar= pd.read_csv(data_path+'\\20250602_fiscalizacao_eletronica.csv',sep=';', encoding='latin1')
+    radar= pd.read_csv(os.path.join(data_path, '20250602_fiscalizacao_eletronica.csv'), sep=';', encoding='latin1')
+
     lats, longs = find_coordinates(radar['GEOMETRIA'])
     radar['LATITUDE'] = lats
     radar['LONGITUDE'] = longs
 
-    semaforo = pd.read_csv(data_path+'\\20250602_sinalizacao_semaforica.csv',sep=';', encoding='latin1')
+    semaforo = pd.read_csv(os.path.join(data_path, '20250602_sinalizacao_semaforica.csv'), sep=';', encoding='latin1')
     lats, longs = find_coordinates(semaforo['GEOMETRIA'])
     semaforo['LATITUDE'] = lats
     semaforo['LONGITUDE'] = longs
 
-    redutor=pd.read_csv(data_path+'\\20250602_redutor_velocidade.csv',sep=';', encoding='latin1')
+    redutor=pd.read_csv(os.path.join(data_path, '20250602_redutor_velocidade.csv'), sep=';', encoding='latin1')
     lats, longs = find_coordinates_line(redutor['GEOMETRIA'])
     redutor['LATITUDE'] = lats
     redutor['LONGITUDE'] = longs
@@ -117,7 +118,7 @@ def generate_cluster_map():
     dentro_raio = distancias <= 10
     redutor = redutor[dentro_raio]
 
-    accidents= pd.read_csv(data_path+'\\si-bol-2023.csv',sep=';', encoding='latin1')
+    accidents= pd.read_csv(os.path.join(data_path, 'si-bol-2023.csv'), sep=';', encoding='latin1')
     accidents = accidents[accidents[' COORDENADA_X'] !=0]
     accidents = accidents[accidents[' COORDENADA_Y'] !=0]
     lats,longs = find_coordinates_accidents(accidents[' COORDENADA_Y'], accidents[' COORDENADA_X'])
@@ -267,17 +268,17 @@ def generate_heatmap():
 
     #accidents_01= pd.read_csv(data_path+'\\20250602_sinistro_transito_vitima.csv',sep=';', encoding='latin1')
 
-    radar= pd.read_csv(data_path+'\\20250602_fiscalizacao_eletronica.csv',sep=';', encoding='latin1')
+    radar= pd.read_csv(os.path.join(data_path, '20250602_fiscalizacao_eletronica.csv'), sep=';', encoding='latin1')
     lats, longs = find_coordinates(radar['GEOMETRIA'])
     radar['LATITUDE'] = lats
     radar['LONGITUDE'] = longs
 
-    semaforo = pd.read_csv(data_path+'\\20250602_sinalizacao_semaforica.csv',sep=';', encoding='latin1')
+    semaforo = pd.read_csv(os.path.join(data_path, '20250602_sinalizacao_semaforica.csv'), sep=';', encoding='latin1')
     lats, longs = find_coordinates(semaforo['GEOMETRIA'])
     semaforo['LATITUDE'] = lats
     semaforo['LONGITUDE'] = longs
 
-    redutor=pd.read_csv(data_path+'\\20250602_redutor_velocidade.csv',sep=';', encoding='latin1')
+    redutor=pd.read_csv(os.path.join(data_path, '20250602_redutor_velocidade.csv'), sep=';', encoding='latin1')
     lats, longs = find_coordinates_line(redutor['GEOMETRIA'])
     redutor['LATITUDE'] = lats
     redutor['LONGITUDE'] = longs
@@ -290,7 +291,7 @@ def generate_heatmap():
     dentro_raio = distancias <= 10
     redutor = redutor[dentro_raio]
 
-    accidents= pd.read_csv(data_path+'\\si-bol-2023.csv',sep=';', encoding='latin1')
+    accidents= pd.read_csv(os.path.join(data_path, 'si-bol-2023.csv'), sep=';', encoding='latin1')
     accidents = accidents[accidents[' COORDENADA_X'] !=0]
     accidents = accidents[accidents[' COORDENADA_Y'] !=0]
     lats,longs = find_coordinates_accidents(accidents[' COORDENADA_Y'], accidents[' COORDENADA_X'])
@@ -543,7 +544,7 @@ with st.container():
 
 with col2:
     st.markdown("### Acidentes ao longo do tempo")
-    accidents= pd.read_csv(data_path+'\\20250602_sinistro_transito_vitima.csv',sep=';', encoding='latin1')
+    accidents= pd.read_csv(os.path.join(data_path, '20250602_sinistro_transito_vitima.csv'), sep=';', encoding='latin1')
     #columns=accidents_01.columns
     #df_time = accidents_01.groupby('DATA_HORA_BOLETIM').sum().reset_index()
 
@@ -554,7 +555,7 @@ with col2:
 
     st.line_chart(df_mensal.rename(columns={'MES': 'index'}).set_index('index'), use_container_width=True)   
 
-    accidents= pd.read_csv(data_path+'\\si-bol-2023.csv',sep=';', encoding='latin1')
+    accidents= pd.read_csv(os.path.join(data_path, 'si-bol-2023.csv'), sep=';', encoding='latin1')
     accidents = accidents[accidents[' COORDENADA_X'] !=0] 
 
     df_accidents = accidents[' DESC_TIPO_ACIDENTE'].value_counts().reset_index()
