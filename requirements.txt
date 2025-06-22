@@ -1,0 +1,11 @@
+pandas
+folium
+shapely
+numpy
+pyproj
+geopy
+scikit-learn
+matplotlib
+streamlit
+plotly
+branca
